@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#111111">
+    <title>Portfolio Rebalancer</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="page-header">
+        <div>
+          <p class="eyebrow">A simple way to stay on target</p>
+          <h1>Portfolio Rebalancer</h1>
+          <p class="intro">Rebalance each account separately, or review your combined portfolio.</p>
+        </div>
+        <button class="text-button" id="reset-button" type="button">Reset this account</button>
+      </header>
+
+      <nav class="tabs" role="tablist" aria-label="Portfolio accounts">
+        <button class="tab-button" id="tab-401k" type="button" role="tab" aria-selected="true" aria-controls="account-view" data-account="401k">401(k)</button>
+        <button class="tab-button" id="tab-roth" type="button" role="tab" aria-selected="false" aria-controls="account-view" data-account="roth">Roth IRA</button>
+        <button class="tab-button" id="tab-brokerage" type="button" role="tab" aria-selected="false" aria-controls="account-view" data-account="brokerage">Traditional Brokerage</button>
+        <button class="tab-button" id="tab-summary" type="button" role="tab" aria-selected="false" aria-controls="summary-view" data-account="summary">Summary</button>
+      </nav>
+      <p class="storage-status" id="storage-status" role="status" aria-live="polite">Changes save automatically in this browser.</p>
+
+      <div id="account-view" role="tabpanel" aria-labelledby="tab-401k">
+      <section class="overview-grid" aria-label="Portfolio overview">
+        <div class="panel chart-panel">
+          <div class="section-heading">
+            <div>
+              <h2>Target, current &amp; final allocation</h2>
+              <p>Outer ring: target &nbsp;·&nbsp; Middle: current &nbsp;·&nbsp; Inner: after trades</p>
+            </div>
+          </div>
+          <div class="chart-content">
+            <div class="donut" id="allocation-chart" role="img" aria-label="Allocation chart">
+              <div class="donut-ring target-ring" id="target-ring"></div>
+              <div class="donut-ring current-ring" id="current-ring"></div>
+              <div class="donut-ring final-ring" id="final-ring"></div>
+              <div class="donut-center">
+                <span>Final value</span>
+                <strong id="chart-total">$0.00</strong>
+              </div>
+            </div>
+            <div class="chart-legend" id="chart-legend" aria-label="Asset allocation legend"></div>
+          </div>
+        </div>
+
+        <div class="panel guidance-panel">
+          <span class="guidance-icon" aria-hidden="true">↗</span>
+          <h2>Your plan, your assets</h2>
+          <p>Negative cash withdrawals sell assets only, automatically. For a positive contribution, check an asset to allow selling it.</p>
+          <div class="overview-stats">
+            <div>
+              <span>Current portfolio</span>
+              <strong id="current-total">$0.00</strong>
+            </div>
+            <div>
+              <span>After trades</span>
+              <strong id="final-total">$0.00</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel contribution-panel" aria-labelledby="contribution-title">
+        <div class="contribution-copy">
+          <label for="contribution" id="contribution-title">Cash to invest or withdraw</label>
+          <p>Positive amounts buy only by default; negative withdrawals sell only and do not require checkboxes.</p>
+        </div>
+        <div class="contribution-controls">
+          <div class="amount-control">
+            <span aria-hidden="true">$</span>
+            <input id="contribution" type="number" step="0.01" value="0" inputmode="decimal" aria-label="Cash to invest or withdraw in dollars">
+          </div>
+          <button class="secondary-button" id="auto-calculate" type="button">Calculate to target</button>
+        </div>
+        <input class="amount-slider" id="contribution-slider" type="range" min="-10000" max="10000" step="25" value="0" aria-label="Adjust cash to invest or withdraw">
+      </section>
+
+      <section class="panel assets-panel" aria-labelledby="assets-title">
+        <div class="assets-heading">
+          <div>
+            <h2 id="assets-title">Your assets</h2>
+            <p>Cash withdrawals generate sells only. With positive cash, assets are buy-only unless checked.</p>
+          </div>
+          <div class="allocation-total" id="allocation-total" aria-live="polite">0% allocated</div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col" class="asset-column">Asset</th>
+                <th scope="col">Target %</th>
+                <th scope="col">Current value</th>
+                <th scope="col">Current %</th>
+                <th scope="col" class="trade-column">
+                  <span>Allow sale?</span>
+                  <input id="select-all" type="checkbox" aria-label="Allow selling all assets">
+                </th>
+                <th scope="col">Buy / sell</th>
+                <th scope="col">Final value</th>
+                <th scope="col">Final %</th>
+                <th scope="col"><span class="visually-hidden">Remove</span></th>
+              </tr>
+            </thead>
+            <tbody id="asset-rows"></tbody>
+            <tfoot>
+              <tr>
+                <th scope="row">Totals</th>
+                <td id="target-total">0.0%</td>
+                <td id="current-value-total">$0.00</td>
+                <td id="current-percent-total">0.0%</td>
+                <td></td>
+                <td id="trade-total">$0.00</td>
+                <td id="final-value-total">$0.00</td>
+                <td id="final-percent-total">0.0%</td>
+                <td></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <div class="table-message" id="table-message" role="status" aria-live="polite"></div>
+        <button class="add-asset-button" id="add-asset" type="button">＋ Add asset</button>
+      </section>
+      </div>
+
+      <section class="panel summary-panel" id="summary-view" role="tabpanel" aria-labelledby="tab-summary" hidden>
+        <div class="assets-heading">
+          <div>
+            <h2>Entire portfolio</h2>
+            <p>Combined current values across all accounts. Set an overall target for each asset type.</p>
+          </div>
+          <div class="allocation-total" id="summary-allocation-total" aria-live="polite">0% allocated</div>
+        </div>
+        <div class="table-wrap">
+          <table class="summary-table">
+            <thead>
+              <tr>
+                <th scope="col" class="asset-column">Asset type</th>
+                <th scope="col">Overall target %</th>
+                <th scope="col">Combined current value</th>
+                <th scope="col">Overall current %</th>
+              </tr>
+            </thead>
+            <tbody id="summary-rows"></tbody>
+            <tfoot>
+              <tr>
+                <th scope="row">Totals</th>
+                <td id="summary-target-total">0.0%</td>
+                <td id="summary-current-total">$0.00</td>
+                <td id="summary-current-percent-total">0.0%</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </section>
+
+      <p class="disclaimer">For planning purposes only. This tool does not provide investment advice.</p>
+    </main>
+  </body>
+</html>
