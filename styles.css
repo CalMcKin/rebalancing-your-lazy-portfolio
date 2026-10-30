@@ -652,6 +652,10 @@ tfoot th {
 }
 
 @media (max-width: 800px) {
+  body {
+    min-width: 0;
+  }
+
   .app-shell {
     width: calc(100% - 20px);
     margin: 10px auto;
@@ -753,5 +757,260 @@ tfoot th {
   .amount-control,
   .secondary-button {
     min-height: 42px;
+  }
+}
+
+@media (max-width: 800px) {
+  .page-header {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .page-header .text-button {
+    align-self: flex-end;
+  }
+
+  .tabs {
+    flex-wrap: wrap;
+    overflow: visible;
+    gap: 4px;
+  }
+
+  .tab-button {
+    min-width: 0;
+    flex: 1 1 calc(50% - 4px);
+    padding: 10px 6px;
+    font-size: 0.78rem;
+    white-space: normal;
+  }
+
+  .storage-status {
+    margin-top: 0;
+    line-height: 1.4;
+  }
+
+  .chart-content {
+    display: grid;
+    justify-items: center;
+    gap: 16px;
+  }
+
+  .chart-legend {
+    width: 100%;
+    min-width: 0;
+    max-width: 320px;
+  }
+
+  .legend-item {
+    grid-template-columns: 9px minmax(0, 1fr) repeat(3, minmax(38px, auto));
+  }
+
+  .contribution-controls {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .secondary-button {
+    min-height: 44px;
+  }
+
+  .amount-slider {
+    min-width: 0;
+  }
+
+  .assets-heading {
+    align-items: flex-start;
+    gap: 10px;
+    padding: 14px 12px;
+  }
+
+  .assets-heading > div:first-child {
+    min-width: 0;
+  }
+
+  .assets-heading h2 {
+    font-size: 1rem;
+  }
+
+  .assets-heading p {
+    font-size: 0.78rem;
+    line-height: 1.4;
+  }
+
+  .allocation-total {
+    flex: 0 0 auto;
+    font-size: 0.7rem;
+  }
+
+  .table-wrap {
+    overflow: visible;
+  }
+
+  .assets-panel table,
+  .summary-panel table {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    font-size: 0.82rem;
+  }
+
+  .assets-panel thead,
+  .summary-panel thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    clip-path: inset(50%);
+  }
+
+  .assets-panel tbody,
+  .summary-panel tbody {
+    display: grid;
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .assets-panel tbody tr,
+  .summary-panel tbody tr {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 12px;
+    min-width: 0;
+    padding: 12px;
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    background: var(--surface-raised);
+  }
+
+  .assets-panel tbody td,
+  .summary-panel tbody td,
+  .summary-panel tbody th {
+    display: flex;
+    min-width: 0;
+    height: auto;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 5px;
+    padding: 0;
+    text-align: left;
+    white-space: normal;
+  }
+
+  .assets-panel tbody td::before,
+  .summary-panel tbody td::before {
+    color: var(--muted);
+    content: attr(data-label);
+    font-size: 0.68rem;
+    line-height: 1.2;
+  }
+
+  .assets-panel tbody .asset-name-cell {
+    grid-column: 1 / -1;
+    padding-right: 32px;
+  }
+
+  .assets-panel .asset-name-input,
+  .assets-panel .numeric-input,
+  .assets-panel .money-input {
+    width: 100%;
+    min-width: 0;
+    height: 38px;
+    padding: 0 8px;
+    font-size: 0.82rem;
+  }
+
+  .assets-panel tbody td[data-label="Allow sale"] {
+    justify-content: center;
+  }
+
+  .assets-panel tbody td[data-label="Allow sale"] .rebalance-check {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+  }
+
+  .assets-panel tbody .remove-cell {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: block;
+    padding: 0;
+  }
+
+  .remove-asset {
+    padding: 3px 7px;
+  }
+
+  .summary-panel tbody th {
+    grid-column: 1 / -1;
+    font-size: 0.9rem;
+  }
+
+  .summary-panel .summary-target-input {
+    width: 100%;
+    max-width: 120px;
+    min-width: 0;
+    margin: 0;
+  }
+
+  .assets-panel tfoot,
+  .summary-panel tfoot {
+    display: block;
+    padding: 0 10px 10px;
+  }
+
+  .assets-panel tfoot tr,
+  .summary-panel tfoot tr {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 12px;
+    padding: 12px;
+    border-top: 1px solid var(--line);
+  }
+
+  .assets-panel tfoot th,
+  .assets-panel tfoot td,
+  .summary-panel tfoot th,
+  .summary-panel tfoot td {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 5px;
+    padding: 0;
+    border: 0;
+    font-size: 0.78rem;
+    text-align: left;
+    white-space: normal;
+  }
+
+  .assets-panel tfoot td::before,
+  .summary-panel tfoot td::before {
+    color: var(--muted);
+    content: attr(data-label);
+    font-size: 0.68rem;
+  }
+
+  .assets-panel tfoot td:empty,
+  .summary-panel tfoot td:empty {
+    display: none;
+  }
+
+  .table-message {
+    padding-right: 12px;
+    padding-left: 12px;
+    line-height: 1.4;
+  }
+
+  .add-asset-button {
+    width: calc(100% - 24px);
+    margin: 12px;
+  }
+
+  .summary-panel {
+    min-height: 0;
   }
 }

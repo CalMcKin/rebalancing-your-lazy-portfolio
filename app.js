@@ -404,9 +404,9 @@ function renderSummary() {
     const currentPercent = currentTotal > 0 ? asset.currentCents / currentTotal * 100 : 0;
     return `<tr>
       <th scope="row">${escapeHtml(asset.name)}</th>
-      <td><input class="field-input numeric-input summary-target-input" data-asset="${escapeHtml(asset.name)}" type="number" min="0" max="100" step="0.1" inputmode="decimal" aria-label="${escapeHtml(asset.name)} overall target percentage" value="${escapeHtml(target)}"></td>
-      <td>${formatMoney(asset.currentCents)}</td>
-      <td>${formatPercent(currentPercent)}</td>
+      <td data-label="Overall target"><input class="field-input numeric-input summary-target-input" data-asset="${escapeHtml(asset.name)}" type="number" min="0" max="100" step="0.1" inputmode="decimal" aria-label="${escapeHtml(asset.name)} overall target percentage" value="${escapeHtml(target)}"></td>
+      <td data-label="Combined current value">${formatMoney(asset.currentCents)}</td>
+      <td data-label="Overall current allocation">${formatPercent(currentPercent)}</td>
     </tr>`;
   }).join("");
   updateSummaryAllocationStatus(summaryAssets);
@@ -476,15 +476,15 @@ function renderRows() {
     const label = escapeHtml(asset.name.trim() || `Asset ${index + 1}`);
     return `
       <tr>
-        <td><input class="field-input asset-name-input" data-field="name" data-index="${index}" type="text" maxlength="40" placeholder="e.g. Total Stock" aria-label="${label} name" value="${escapeHtml(asset.name)}"></td>
-        <td><input class="field-input numeric-input" data-field="target" data-index="${index}" type="number" min="0" max="100" step="0.1" inputmode="decimal" aria-label="${label} target percentage" value="${escapeHtml(asset.target)}"></td>
-        <td><input class="field-input money-input" data-field="current" data-index="${index}" type="number" min="0" step="0.01" inputmode="decimal" aria-label="${label} current value" value="${escapeHtml(asset.current)}"></td>
-        <td class="current-percent">0.0%</td>
-        <td><input class="rebalance-check" data-field="allowSale" data-index="${index}" type="checkbox" aria-label="Allow selling ${label}" ${asset.allowSale ? "checked" : ""}></td>
-        <td class="trade-value">$0.00</td>
-        <td class="final-value">$0.00</td>
-        <td class="final-percent">0.0%</td>
-        <td><button class="remove-asset" data-remove="${index}" type="button" aria-label="Remove ${label}">×</button></td>
+        <td class="asset-name-cell"><input class="field-input asset-name-input" data-field="name" data-index="${index}" type="text" maxlength="40" placeholder="e.g. Total Stock" aria-label="${label} name" value="${escapeHtml(asset.name)}"></td>
+        <td data-label="Target %"><input class="field-input numeric-input" data-field="target" data-index="${index}" type="number" min="0" max="100" step="0.1" inputmode="decimal" aria-label="${label} target percentage" value="${escapeHtml(asset.target)}"></td>
+        <td data-label="Current value"><input class="field-input money-input" data-field="current" data-index="${index}" type="number" min="0" step="0.01" inputmode="decimal" aria-label="${label} current value" value="${escapeHtml(asset.current)}"></td>
+        <td class="current-percent" data-label="Current allocation">0.0%</td>
+        <td data-label="Allow sale"><input class="rebalance-check" data-field="allowSale" data-index="${index}" type="checkbox" aria-label="Allow selling ${label}" ${asset.allowSale ? "checked" : ""}></td>
+        <td class="trade-value" data-label="Buy / sell">$0.00</td>
+        <td class="final-value" data-label="Final value">$0.00</td>
+        <td class="final-percent" data-label="Final allocation">0.0%</td>
+        <td class="remove-cell"><button class="remove-asset" data-remove="${index}" type="button" aria-label="Remove ${label}">×</button></td>
       </tr>
     `;
   }).join("");

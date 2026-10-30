@@ -17,6 +17,7 @@ This is a static, browser-only portfolio rebalancer. It has no build step or ext
 - The 401(k), Roth IRA, and Traditional Brokerage each have independent holdings, targets, sale permissions, and cash contributions. New accounts start with Total Stock (70%), Total Bond (10%), and Total International Stock (20%).
 - The Summary tab aggregates current values by asset name across accounts. Its overall targets are independent of account targets, and it does not calculate trades.
 - The account chart shows target, current, and after-trade percentages as three concentric rings; the legend reports all three values.
+- At viewport widths up to 800px, tabs wrap, the chart stacks, and account/summary tables become labeled cards to avoid horizontal scrolling. Keep desktop styling unchanged when adjusting responsive rules.
 - Account data, summary targets, and the selected tab save to `localStorage` under `portfolio-rebalancer-state-v1`. Keep saved-state loading tolerant of missing or malformed data and report storage errors visibly.
 - Positive contributions buy only unless an asset's sale checkbox is enabled. Withdrawals generate sells only.
 - Reset restores only the active account to its initial assets and zero contribution.
