@@ -10,6 +10,7 @@ This is a static, browser-only portfolio rebalancer. It has no build step or ext
 - `app.js` owns account data, trade calculations, chart rendering, and browser persistence.
 - `styles.css` contains the responsive layout, allocation rings, and input styling.
 - `README.md` documents how to run and use the app.
+- `install-service.sh` installs and enables the systemd static-file server on port 8000.
 
 ## Behavior to preserve
 
@@ -23,3 +24,5 @@ This is a static, browser-only portfolio rebalancer. It has no build step or ext
 ## Validation
 
 There is no configured test runner. For UI changes, run the app in a browser and verify account switching, summary aggregation, calculations, and persistence across reloads. The browser's local storage is origin-specific, so reopening the app under a different hostname or protocol uses a different saved state.
+
+The system service installer must be run as the normal account that should own the service; it invokes `sudo` itself. The service runs on all interfaces without authentication or HTTPS, so keep it on a trusted network.
